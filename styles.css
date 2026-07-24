@@ -1,0 +1,125 @@
+@layer base {
+    html {
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+        scroll-behavior: smooth;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0B0B0B;
+}
+.light ::-webkit-scrollbar-track {
+    background: #F4F4F6;
+}
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+}
+.light ::-webkit-scrollbar-thumb {
+    background: #D4D4D8;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+}
+.light ::-webkit-scrollbar-thumb:hover {
+    background: #A1A1AA;
+}
+
+/* Glassmorphism utility */
+.glass-panel-dark {
+    background: rgba(18, 18, 18, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.glass-panel-light {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Luxurious Card Glow Effect */
+.luxury-card-dark {
+    background: #121212;
+    border: 1px solid #1C1C1C;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.luxury-card-dark:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 255, 255, 0.04);
+}
+
+.luxury-card-light {
+    background: #FFFFFF;
+    border: 1px solid #EFEFEF;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.luxury-card-light:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 15px rgba(0, 0, 0, 0.03);
+}
+
+/* Architectural Frame */
+.architectural-frame {
+    position: relative;
+}
+.architectural-frame::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 1rem;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+.light .architectural-frame::before {
+    border-color: rgba(0, 0, 0, 0.15);
+}
+.architectural-frame:hover::before {
+    inset: -10px;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.light .architectural-frame:hover::before {
+    border-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Grid subtle background pattern */
+.grid-bg-dark {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+.grid-bg-light {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+/* Modern Gradient Text */
+.gradient-text-dark {
+    background: linear-gradient(135deg, #FFFFFF 0%, #A1A1AA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.gradient-text-light {
+    background: linear-gradient(135deg, #000000 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.shimmer-btn {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
+}
