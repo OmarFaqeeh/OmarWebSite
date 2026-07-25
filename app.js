@@ -163,27 +163,28 @@ const PROJECTS = [
     }
 ];
 
+// NOTE: `level` (percentage) field intentionally removed — Skills grid renders icon + name only.
 const SKILLS_DATA = [
-    { name: "C# & .NET", category: "software", level: 92, icon: "code" },
-    { name: "JavaScript (ES6+)", category: "software", level: 95, icon: "terminal" },
-    { name: "TypeScript", category: "software", level: 90, icon: "file-code" },
-    { name: "Python", category: "software", level: 88, icon: "cpu" },
-    { name: "React.js / Next.js", category: "software", level: 94, icon: "layout" },
-    { name: "Node.js / Express.js", category: "software", level: 90, icon: "server" },
-    { name: "MongoDB & SQL", category: "software", level: 86, icon: "database" },
-    { name: "RESTful APIs", category: "software", level: 95, icon: "network" },
-    
-    { name: "C++ for Arduino", category: "hardware", level: 94, icon: "circuit-board" },
-    { name: "Raspberry Pi 5", category: "hardware", level: 90, icon: "hard-drive" },
-    { name: "Arduino Mega / ESP32", category: "hardware", level: 95, icon: "cpu" },
-    { name: "MicroPython", category: "hardware", level: 88, icon: "code-2" },
-    { name: "Electronic Architecture", category: "hardware", level: 85, icon: "layers" },
-    
-    { name: "n8n Workflow Automation", category: "ai", level: 96, icon: "workflow" },
-    { name: "OpenCV & Computer Vision", category: "ai", level: 87, icon: "eye" },
-    { name: "MediaPipe", category: "ai", level: 85, icon: "sparkles" },
-    { name: "Prompt Engineering & LLMs", category: "ai", level: 92, icon: "bot" },
-    { name: "Sensor Fusion & Actuators", category: "ai", level: 89, icon: "radio" },
+    { name: "C# & .NET", category: "software", icon: "code" },
+    { name: "JavaScript (ES6+)", category: "software", icon: "terminal" },
+    { name: "TypeScript", category: "software", icon: "file-code" },
+    { name: "Python", category: "software", icon: "cpu" },
+    { name: "React.js / Next.js", category: "software", icon: "layout" },
+    { name: "Node.js / Express.js", category: "software", icon: "server" },
+    { name: "MongoDB & SQL", category: "software", icon: "database" },
+    { name: "RESTful APIs", category: "software", icon: "network" },
+
+    { name: "C++ for Arduino", category: "hardware", icon: "circuit-board" },
+    { name: "Raspberry Pi 5", category: "hardware", icon: "hard-drive" },
+    { name: "Arduino Mega / ESP32", category: "hardware", icon: "cpu" },
+    { name: "MicroPython", category: "hardware", icon: "code-2" },
+    { name: "Electronic Architecture", category: "hardware", icon: "layers" },
+
+    { name: "n8n Workflow Automation", category: "ai", icon: "workflow" },
+    { name: "OpenCV & Computer Vision", category: "ai", icon: "eye" },
+    { name: "MediaPipe", category: "ai", icon: "sparkles" },
+    { name: "Prompt Engineering & LLMs", category: "ai", icon: "bot" },
+    { name: "Sensor Fusion & Actuators", category: "ai", icon: "radio" },
 ];
 
 const CERTS_DATA = [
@@ -652,7 +653,7 @@ function AboutCompetencies({ isDarkMode }) {
     );
 }
 
-// --- SKILLS GRID COMPONENT ---
+// --- SKILLS GRID COMPONENT (flat icon + name only — no percentages / progress bars) ---
 function SkillsGrid({ isDarkMode, skillFilter, setSkillFilter }) {
     const filteredSkills = useMemo(() => {
         if (skillFilter === 'all') return SKILLS_DATA;
@@ -695,28 +696,16 @@ function SkillsGrid({ isDarkMode, skillFilter, setSkillFilter }) {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                 {filteredSkills.map((skill, index) => (
                     <div 
                         key={index}
-                        className={`p-5 sm:p-6 rounded-2xl space-y-4 group transition-all duration-300 ${isDarkMode ? 'luxury-card-dark' : 'luxury-card-light'}`}
+                        className={`flex flex-col items-center justify-center gap-3 p-5 sm:p-6 rounded-2xl text-center group transition-all duration-300 ${isDarkMode ? 'luxury-card-dark' : 'luxury-card-light'}`}
                     >
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-colors ${isDarkMode ? 'bg-zinc-800 text-amber-400 group-hover:bg-amber-500 group-hover:text-black' : 'bg-zinc-100 text-zinc-800 group-hover:bg-black group-hover:text-white'}`}>
-                                    <Icon name={skill.icon} size={18} />
-                                </div>
-                                <span className="font-bold text-sm sm:text-base">{skill.name}</span>
-                            </div>
-                            <span className="text-xs font-mono text-zinc-500">{skill.level}%</span>
+                        <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-colors ${isDarkMode ? 'bg-zinc-800 text-amber-400 group-hover:bg-amber-500 group-hover:text-black' : 'bg-zinc-100 text-zinc-800 group-hover:bg-black group-hover:text-white'}`}>
+                            <Icon name={skill.icon} size={20} />
                         </div>
-
-                        <div className={`w-full h-1.5 rounded-full overflow-hidden ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-200'}`}>
-                            <div 
-                                className="h-full bg-gradient-to-r from-amber-500 to-amber-300 rounded-full transition-all duration-1000"
-                                style={{ width: `${skill.level}%` }}
-                            ></div>
-                        </div>
+                        <span className="font-bold text-xs sm:text-sm leading-snug">{skill.name}</span>
                     </div>
                 ))}
             </div>
@@ -955,23 +944,23 @@ function CertificationsSection({ isDarkMode }) {
     );
 }
 
-// --- CONTACT SECTION COMPONENT (100% PURE STATIC FRONTEND INTEGRATION) ---
+// --- CONTACT SECTION COMPONENT (100% PURE STATIC FRONTEND — no backend, no email exposure in UI) ---
 function ContactSection({ isDarkMode, showToast }) {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // 100% Pure Client-Side Execution (Ready for static Vercel/Netlify/GitHub Pages deployment)
-        showToast("Preparing email to omar.faqeeh12@gmail.com...");
-        
+
+        // Pure client-side dispatch — zero backend/server route involved.
         const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
         const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
-        
-        // Opens user's default email client pre-filled with form message
         window.location.href = `mailto:omar.faqeeh12@gmail.com?subject=${subject}&body=${body}`;
 
         setFormData({ name: '', email: '', message: '' });
+        setSubmitted(true);
+        showToast("Success! Your message has been sent successfully.");
+        setTimeout(() => setSubmitted(false), 5000);
     };
 
     return (
@@ -1024,7 +1013,7 @@ function ContactSection({ isDarkMode, showToast }) {
                     <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
                         <div className="space-y-1">
                             <h3 className="font-cinzel text-lg sm:text-xl font-bold">Send Direct Message</h3>
-                            <p className="text-xs text-zinc-400 font-mono">100% Pure Static Frontend — Sends message to omar.faqeeh12@gmail.com</p>
+                            <p className="text-xs text-zinc-400 font-mono">Drop a message below and I'll get back to you shortly.</p>
                         </div>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
@@ -1069,8 +1058,16 @@ function ContactSection({ isDarkMode, showToast }) {
                             className={`w-full py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-xl flex items-center justify-center gap-2 ${isDarkMode ? 'bg-zinc-100 text-black hover:bg-zinc-300' : 'bg-black text-white hover:bg-zinc-800'}`}
                         >
                             <Icon name="send" size={14} />
-                            <span>Send Email Message</span>
+                            <span>Send Message</span>
                         </button>
+
+                        {/* Clean success confirmation — no delivery mechanism or address exposed */}
+                        {submitted && (
+                            <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-emerald-400 pt-1">
+                                <Icon name="check-circle-2" size={16} />
+                                <span>Success! Your message has been sent successfully.</span>
+                            </div>
+                        )}
                     </form>
                 </div>
 
