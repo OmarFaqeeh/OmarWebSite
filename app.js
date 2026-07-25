@@ -1,6 +1,6 @@
 // Omar Ahmad Alfaqeeh - Executive Personal Portfolio Application (100% Pure Static Frontend)
 const { useState, useEffect, useRef, useMemo } = React;
-
+ 
 // --- PURE REACT SVG ICON COMPONENT (Zero DOM mutations) ---
 const ICON_MAP = {
     "download": <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></>,
@@ -42,7 +42,7 @@ const ICON_MAP = {
     "check": <polyline points="20 6 9 17 4 12"/>,
     "external-link": <><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></>
 };
-
+ 
 const Icon = ({ name, className = "w-5 h-5", size = 20 }) => {
     return (
         <svg 
@@ -62,7 +62,7 @@ const Icon = ({ name, className = "w-5 h-5", size = 20 }) => {
         </svg>
     );
 };
-
+ 
 // --- DATA DEFINITIONS ---
 const PROJECTS = [
     {
@@ -162,7 +162,7 @@ const PROJECTS = [
         tags: ["Next.js", "Node.js", "MongoDB", "Geo-Location APIs", "Audio Streaming Engine", "Dynamic Theming (MUI)"]
     }
 ];
-
+ 
 // NOTE: `level` (percentage) field intentionally removed — Skills grid renders icon + name only.
 const SKILLS_DATA = [
     { name: "C# & .NET", category: "software", icon: "code" },
@@ -173,20 +173,20 @@ const SKILLS_DATA = [
     { name: "Node.js / Express.js", category: "software", icon: "server" },
     { name: "MongoDB & SQL", category: "software", icon: "database" },
     { name: "RESTful APIs", category: "software", icon: "network" },
-
+ 
     { name: "C++ for Arduino", category: "hardware", icon: "circuit-board" },
     { name: "Raspberry Pi 5", category: "hardware", icon: "hard-drive" },
     { name: "Arduino Mega / ESP32", category: "hardware", icon: "cpu" },
     { name: "MicroPython", category: "hardware", icon: "code-2" },
     { name: "Electronic Architecture", category: "hardware", icon: "layers" },
-
+ 
     { name: "n8n Workflow Automation", category: "ai", icon: "workflow" },
     { name: "OpenCV & Computer Vision", category: "ai", icon: "eye" },
     { name: "MediaPipe", category: "ai", icon: "sparkles" },
     { name: "Prompt Engineering & LLMs", category: "ai", icon: "bot" },
     { name: "Sensor Fusion & Actuators", category: "ai", icon: "radio" },
 ];
-
+ 
 const CERTS_DATA = [
     {
         title: "Introduction to Programming With C#",
@@ -231,7 +231,7 @@ const CERTS_DATA = [
         credential: "Harvard edX Verification"
     }
 ];
-
+ 
 const AI_BOT_KNOWLEDGE = [
     {
         trigger: ["stack", "technology", "technologies", "languages", "skills"],
@@ -254,14 +254,14 @@ const AI_BOT_KNOWLEDGE = [
         response: "Omar holds 6 prestigious certifications:\n• Introduction to Programming With C# (Microsoft)\n• C# Programming Fundamentals (IT Legend)\n• Back-End Apps with Node.js & Express (IBM)\n• Generative AI & LLMs Architecture (IBM)\n• Claude 101 Training Curriculum (Anthropic)\n• CS50 Computer Science (Harvard University)"
     }
 ];
-
+ 
 // --- MAIN APPLICATION COMPONENT ---
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [activeProjectModal, setActiveProjectModal] = useState(null);
     const [skillFilter, setSkillFilter] = useState('all');
     const [toastMessage, setToastMessage] = useState('');
-
+ 
     useEffect(() => {
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
@@ -271,12 +271,12 @@ function App() {
             document.documentElement.classList.add('light');
         }
     }, [isDarkMode]);
-
+ 
     const showToast = (msg) => {
         setToastMessage(msg);
         setTimeout(() => setToastMessage(''), 4000);
     };
-
+ 
     const triggerConfetti = () => {
         if (window.confetti) {
             window.confetti({
@@ -287,7 +287,7 @@ function App() {
         }
         showToast("Downloading Omar Alfaqeeh's CV...");
     };
-
+ 
     return (
         <div className={`min-h-screen transition-colors duration-500 ${isDarkMode ? 'bg-[#0B0B0B] text-zinc-100 grid-bg-dark' : 'bg-[#F9F9FB] text-zinc-900 grid-bg-light'}`}>
             
@@ -298,51 +298,51 @@ function App() {
                     <span className="text-xs sm:text-sm font-medium">{toastMessage}</span>
                 </div>
             )}
-
+ 
             {/* HEADER / NAVBAR */}
             <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} triggerConfetti={triggerConfetti} />
-
+ 
             {/* HERO SECTION */}
             <Hero isDarkMode={isDarkMode} triggerConfetti={triggerConfetti} />
-
+ 
             {/* AI CORE & COMPETENCIES SECTION */}
             <AboutCompetencies isDarkMode={isDarkMode} />
-
+ 
             {/* TECHNICAL SKILLS GRID */}
             <SkillsGrid isDarkMode={isDarkMode} skillFilter={skillFilter} setSkillFilter={setSkillFilter} />
-
+ 
             {/* PROJECTS SHOWCASE */}
             <ProjectsShowcase isDarkMode={isDarkMode} onSelectProject={setActiveProjectModal} />
-
+ 
             {/* CERTIFICATIONS SECTION */}
             <CertificationsSection isDarkMode={isDarkMode} />
-
+ 
             {/* CONTACT & FOOTER */}
             <ContactSection isDarkMode={isDarkMode} showToast={showToast} />
             <Footer isDarkMode={isDarkMode} />
-
+ 
             {/* PROJECT MODAL */}
             {activeProjectModal && (
                 <ProjectModal project={activeProjectModal} onClose={() => setActiveProjectModal(null)} isDarkMode={isDarkMode} />
             )}
-
+ 
             {/* FLOATING AI CHATBOT */}
             <AIChatbotOverlay isDarkMode={isDarkMode} />
         </div>
     );
 }
-
+ 
 // --- NAVBAR COMPONENT (RESPONSIVE FIX FOR IPAD / TABLET 768px-1024px) ---
 function Navbar({ isDarkMode, setIsDarkMode, triggerConfetti }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-
+ 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 30);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
+ 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? (isDarkMode ? 'glass-panel-dark py-3 border-b border-zinc-800' : 'glass-panel-light py-3 border-b border-zinc-200 shadow-sm') : 'py-4 sm:py-6 bg-transparent'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
@@ -360,7 +360,7 @@ function Navbar({ isDarkMode, setIsDarkMode, triggerConfetti }) {
                         </span>
                     </div>
                 </a>
-
+ 
                 {/* Desktop Navigation Links (Switches to mobile/tablet drawer below 1024px to prevent iPad clipping) */}
                 <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs xl:text-sm font-medium tracking-wide">
                     <a href="#about" className="hover:text-amber-400 transition-colors">About & AI</a>
@@ -369,7 +369,7 @@ function Navbar({ isDarkMode, setIsDarkMode, triggerConfetti }) {
                     <a href="#certifications" className="hover:text-amber-400 transition-colors">Certifications</a>
                     <a href="#contact" className="hover:text-amber-400 transition-colors">Contact</a>
                 </nav>
-
+ 
                 {/* Right Action Tools for Desktop (lg: 1024px+) */}
                 <div className="hidden lg:flex items-center gap-3 xl:gap-4">
                     <button 
@@ -379,7 +379,7 @@ function Navbar({ isDarkMode, setIsDarkMode, triggerConfetti }) {
                     >
                         <Icon name={isDarkMode ? "sun" : "moon"} size={18} />
                     </button>
-
+ 
                     <a 
                         href="/Omar_Alfaqeeh_CV.pdf" 
                         download="Omar_Alfaqeeh_CV.pdf"
@@ -390,7 +390,7 @@ function Navbar({ isDarkMode, setIsDarkMode, triggerConfetti }) {
                         <span>Download CV</span>
                     </a>
                 </div>
-
+ 
                 {/* Mobile & iPad Hamburger Toggle (Visible under 1024px) */}
                 <div className="flex lg:hidden items-center gap-2">
                     <button 
@@ -407,7 +407,7 @@ function Navbar({ isDarkMode, setIsDarkMode, triggerConfetti }) {
                     </button>
                 </div>
             </div>
-
+ 
             {/* Mobile & Tablet Slide-down Drawer Menu */}
             {mobileMenuOpen && (
                 <div className={`lg:hidden px-6 pt-4 pb-6 mt-3 border-b ${isDarkMode ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'}`}>
@@ -432,31 +432,43 @@ function Navbar({ isDarkMode, setIsDarkMode, triggerConfetti }) {
         </header>
     );
 }
-
+ 
 // --- HERO SECTION COMPONENT ---
 function Hero({ isDarkMode, triggerConfetti }) {
     const [typedText, setTypedText] = useState('');
     const fullText = "Full-Stack Web Developer & IoT Engineer";
-
+ 
     useEffect(() => {
-        let i = 0;
-        const timer = setInterval(() => {
-            if (i < fullText.length) {
-                setTypedText(fullText.substring(0, i + 1));
-                i++;
-            } else {
-                clearInterval(timer);
-            }
-        }, 60);
-        return () => clearInterval(timer);
+        let typeTimer = null;
+ 
+        const runTypingCycle = () => {
+            setTypedText('');
+            let i = 0;
+            typeTimer = setInterval(() => {
+                if (i < fullText.length) {
+                    setTypedText(fullText.substring(0, i + 1));
+                    i++;
+                } else {
+                    clearInterval(typeTimer);
+                }
+            }, 60);
+        };
+ 
+        runTypingCycle(); // Runs immediately on page load
+        const loopTimer = setInterval(runTypingCycle, 20000); // Repeats every 20 seconds
+ 
+        return () => {
+            clearInterval(typeTimer);
+            clearInterval(loopTimer);
+        };
     }, []);
-
+ 
     return (
         <section id="hero" className="relative pt-28 sm:pt-36 pb-16 sm:pb-24 md:pt-44 md:pb-32 px-4 sm:px-6 overflow-hidden">
             
             {/* Ambient Background Glows */}
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[350px] sm:w-[600px] h-[300px] bg-gradient-to-tr from-amber-500/10 via-zinc-400/5 to-transparent blur-3xl rounded-full pointer-events-none"></div>
-
+ 
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 
                 {/* Hero Left Text Content */}
@@ -467,7 +479,7 @@ function Hero({ isDarkMode, triggerConfetti }) {
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span>2 Years Active Production Experience</span>
                     </div>
-
+ 
                     {/* Main Title */}
                     <div className="space-y-3 sm:space-y-4">
                         <h1 className="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight sm:leading-none">
@@ -479,12 +491,12 @@ function Hero({ isDarkMode, triggerConfetti }) {
                             <span className="inline-block w-2 h-5 bg-amber-400 ml-1 animate-pulse"></span>
                         </h2>
                     </div>
-
+ 
                     {/* Subtitle */}
                     <p className={`text-sm sm:text-base lg:text-lg max-w-2xl font-normal leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
                         Architecting Next-Generation Hardware-Software Ecosystems & AI-Driven Workflows. Specialized in bridging scalable MERN & C# backends with high-throughput microcontrollers, computer vision, and autonomous n8n pipelines.
                     </p>
-
+ 
                     {/* CTA Action Buttons */}
                     <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3.5 pt-2">
                         <a 
@@ -494,7 +506,7 @@ function Hero({ isDarkMode, triggerConfetti }) {
                             <span>Explore Projects</span>
                             <Icon name="arrow-down-right" size={16} />
                         </a>
-
+ 
                         <a 
                             href="/Omar_Alfaqeeh_CV.pdf" 
                             download="Omar_Alfaqeeh_CV.pdf"
@@ -505,7 +517,7 @@ function Hero({ isDarkMode, triggerConfetti }) {
                             <span>Download PDF CV</span>
                         </a>
                     </div>
-
+ 
                     {/* Metrics Bar */}
                     <div className={`grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t ${isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'}`}>
                         <div>
@@ -526,7 +538,7 @@ function Hero({ isDarkMode, triggerConfetti }) {
                         </div>
                     </div>
                 </div>
-
+ 
                 {/* Hero Right Framed Profile Image */}
                 <div className="lg:col-span-5 flex justify-center mt-4 lg:mt-0">
                     <div className="relative group w-full max-w-sm sm:max-w-md">
@@ -541,7 +553,7 @@ function Hero({ isDarkMode, triggerConfetti }) {
                                     e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80";
                                 }}
                             />
-
+ 
                             <div className={`absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 p-3 sm:p-4 rounded-xl backdrop-blur-md border ${isDarkMode ? 'bg-black/75 border-zinc-700/80 text-white' : 'bg-white/85 border-zinc-200 text-black shadow-lg'}`}>
                                 <div className="flex items-center justify-between">
                                     <div>
@@ -556,12 +568,12 @@ function Hero({ isDarkMode, triggerConfetti }) {
                         </div>
                     </div>
                 </div>
-
+ 
             </div>
         </section>
     );
 }
-
+ 
 // --- ABOUT & AI CORE COMPETENCIES ---
 function AboutCompetencies({ isDarkMode }) {
     return (
@@ -573,7 +585,7 @@ function AboutCompetencies({ isDarkMode }) {
                     <h2 className="font-cinzel text-2xl sm:text-4xl font-bold">Bridging AI Orchestration & Embedded Engineering</h2>
                     <div className="w-16 h-1 bg-amber-500 mx-auto rounded-full"></div>
                 </div>
-
+ 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                     <div className={`lg:col-span-5 p-6 sm:p-8 rounded-2xl flex flex-col justify-between ${isDarkMode ? 'luxury-card-dark' : 'luxury-card-light'}`}>
                         <div className="space-y-5 sm:space-y-6">
@@ -586,13 +598,13 @@ function AboutCompetencies({ isDarkMode }) {
                                 Specializing in the MERN stack alongside professional enterprise backend development using C#. Proven track record in orchestrating smart hardware systems, computer vision environments, and high-throughput logical pipelines into microcontrollers.
                             </p>
                         </div>
-
+ 
                         <div className={`mt-8 pt-6 border-t flex flex-wrap items-center justify-between text-xs font-mono gap-2 ${isDarkMode ? 'border-zinc-800 text-zinc-400' : 'border-zinc-200 text-zinc-600'}`}>
                             <div><strong className="text-white dark:text-white light:text-black">Languages:</strong> Arabic (Native) | English (Professional)</div>
                             <div className="text-amber-500 font-bold">C# / JS / C++ / Python</div>
                         </div>
                     </div>
-
+ 
                     <div className={`lg:col-span-7 p-6 sm:p-8 rounded-2xl space-y-6 relative overflow-hidden ${isDarkMode ? 'luxury-card-dark border-amber-500/20' : 'luxury-card-light border-amber-500/30'}`}>
                         <div className="flex flex-wrap items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
@@ -608,11 +620,11 @@ function AboutCompetencies({ isDarkMode }) {
                                 Autonomous Pipelines
                             </span>
                         </div>
-
+ 
                         <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
                             Highly effective in harnessing Artificial Intelligence systems, deploying advanced prompt engineering methodologies to orchestrate optimal backend layouts and codebase flows. Experienced in driving complex operational efficiency by building AI automation layers, creating automated systems using <strong className="text-purple-400">n8n</strong> for workflow acceleration, task tracking, comprehensive content curation, and autonomous script generation.
                         </p>
-
+ 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                             <div className={`p-4 rounded-xl border ${isDarkMode ? 'bg-zinc-900/60 border-zinc-800' : 'bg-zinc-50 border-zinc-200'}`}>
                                 <div className="flex items-center gap-2 font-semibold text-xs sm:text-sm mb-1">
@@ -621,7 +633,7 @@ function AboutCompetencies({ isDarkMode }) {
                                 </div>
                                 <div className="text-[11px] text-zinc-400">Automated event listeners, webhooks, and asynchronous API integrations.</div>
                             </div>
-
+ 
                             <div className={`p-4 rounded-xl border ${isDarkMode ? 'bg-zinc-900/60 border-zinc-800' : 'bg-zinc-50 border-zinc-200'}`}>
                                 <div className="flex items-center gap-2 font-semibold text-xs sm:text-sm mb-1">
                                     <Icon name="bot" className="text-purple-400" size={16} />
@@ -629,7 +641,7 @@ function AboutCompetencies({ isDarkMode }) {
                                 </div>
                                 <div className="text-[11px] text-zinc-400">Custom context-bound LLM prompts for reliable code generation & analysis.</div>
                             </div>
-
+ 
                             <div className={`p-4 rounded-xl border ${isDarkMode ? 'bg-zinc-900/60 border-zinc-800' : 'bg-zinc-50 border-zinc-200'}`}>
                                 <div className="flex items-center gap-2 font-semibold text-xs sm:text-sm mb-1">
                                     <Icon name="terminal" className="text-blue-400" size={16} />
@@ -637,7 +649,7 @@ function AboutCompetencies({ isDarkMode }) {
                                 </div>
                                 <div className="text-[11px] text-zinc-400">Generating resilient micro-scripts for database sync and payload validation.</div>
                             </div>
-
+ 
                             <div className={`p-4 rounded-xl border ${isDarkMode ? 'bg-zinc-900/60 border-zinc-800' : 'bg-zinc-50 border-zinc-200'}`}>
                                 <div className="flex items-center gap-2 font-semibold text-xs sm:text-sm mb-1">
                                     <Icon name="line-chart" className="text-emerald-400" size={16} />
@@ -652,14 +664,14 @@ function AboutCompetencies({ isDarkMode }) {
         </section>
     );
 }
-
+ 
 // --- SKILLS GRID COMPONENT (flat icon + name only — no percentages / progress bars) ---
 function SkillsGrid({ isDarkMode, skillFilter, setSkillFilter }) {
     const filteredSkills = useMemo(() => {
         if (skillFilter === 'all') return SKILLS_DATA;
         return SKILLS_DATA.filter(s => s.category === skillFilter);
     }, [skillFilter]);
-
+ 
     return (
         <section id="skills" className="py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 sm:space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -667,7 +679,7 @@ function SkillsGrid({ isDarkMode, skillFilter, setSkillFilter }) {
                     <div className="text-xs font-mono uppercase tracking-widest text-amber-500">Technical Expertise</div>
                     <h2 className="font-cinzel text-2xl sm:text-4xl font-bold">Skills & Hardware-Software Stack</h2>
                 </div>
-
+ 
                 <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl bg-zinc-900/80 border border-zinc-800 light:bg-zinc-200 light:border-zinc-300">
                     <button 
                         onClick={() => setSkillFilter('all')} 
@@ -695,7 +707,7 @@ function SkillsGrid({ isDarkMode, skillFilter, setSkillFilter }) {
                     </button>
                 </div>
             </div>
-
+ 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                 {filteredSkills.map((skill, index) => (
                     <div 
@@ -712,7 +724,7 @@ function SkillsGrid({ isDarkMode, skillFilter, setSkillFilter }) {
         </section>
     );
 }
-
+ 
 // --- PROJECTS SHOWCASE COMPONENT ---
 function ProjectsShowcase({ isDarkMode, onSelectProject }) {
     return (
@@ -725,7 +737,7 @@ function ProjectsShowcase({ isDarkMode, onSelectProject }) {
                         Click on any project card below to launch the comprehensive engineering modal with live website links and architecture breakdowns.
                     </p>
                 </div>
-
+ 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                     {PROJECTS.map((proj) => (
                         <div 
@@ -745,18 +757,18 @@ function ProjectsShowcase({ isDarkMode, onSelectProject }) {
                                 <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-wider bg-black/80 text-amber-400 border border-amber-500/30 backdrop-blur-md">
                                     {proj.badge}
                                 </div>
-
+ 
                                 <div className="absolute bottom-4 left-4 sm:left-6 right-4 sm:right-6">
                                     <div className="text-[10px] sm:text-xs font-mono text-amber-400 uppercase tracking-widest">{proj.category}</div>
                                     <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white group-hover:text-amber-300 transition-colors">{proj.title}</h3>
                                 </div>
                             </div>
-
+ 
                             <div className="p-5 sm:p-6 space-y-5 flex-1 flex flex-col justify-between">
                                 <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
                                     {proj.description}
                                 </p>
-
+ 
                                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                                     {proj.tags.slice(0, 4).map((tag, tIdx) => (
                                         <span key={tIdx} className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-mono ${isDarkMode ? 'bg-zinc-900 border border-zinc-800 text-zinc-400' : 'bg-zinc-100 border border-zinc-200 text-zinc-700'}`}>
@@ -769,7 +781,7 @@ function ProjectsShowcase({ isDarkMode, onSelectProject }) {
                                         </span>
                                     )}
                                 </div>
-
+ 
                                 <div className={`pt-4 border-t flex items-center justify-between text-xs font-mono uppercase tracking-wider ${isDarkMode ? 'border-zinc-800/80 text-amber-400' : 'border-zinc-200 text-black'}`}>
                                     <span>View Details & Live Demo</span>
                                     <Icon name="arrow-right" className="group-hover:translate-x-2 transition-transform" size={16} />
@@ -782,7 +794,7 @@ function ProjectsShowcase({ isDarkMode, onSelectProject }) {
         </section>
     );
 }
-
+ 
 // --- PROJECT MODAL COMPONENT ---
 function ProjectModal({ project, onClose, isDarkMode }) {
     useEffect(() => {
@@ -790,7 +802,7 @@ function ProjectModal({ project, onClose, isDarkMode }) {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [onClose]);
-
+ 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/85 backdrop-blur-xl animate-fadeIn">
             <div className={`relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-2xl border shadow-2xl ${isDarkMode ? 'bg-[#121212] border-zinc-800 text-white' : 'bg-white border-zinc-300 text-black'}`}>
@@ -806,7 +818,7 @@ function ProjectModal({ project, onClose, isDarkMode }) {
                         <Icon name="x" size={20} />
                     </button>
                 </div>
-
+ 
                 <div className="p-5 sm:p-8 space-y-6 sm:space-y-8">
                     <div className="relative h-56 sm:h-72 rounded-xl overflow-hidden">
                         <img 
@@ -820,7 +832,7 @@ function ProjectModal({ project, onClose, isDarkMode }) {
                             <h4 className="text-xl sm:text-2xl font-cinzel font-bold text-white leading-tight">{project.subtitle}</h4>
                         </div>
                     </div>
-
+ 
                     {/* LIVE WEBSITE CTA BUTTON ROW */}
                     <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
@@ -832,7 +844,7 @@ function ProjectModal({ project, onClose, isDarkMode }) {
                                 <div className="text-xs text-zinc-400 font-mono">Launch high-performance production build</div>
                             </div>
                         </div>
-
+ 
                         <a 
                             href={project.liveUrl} 
                             target="_blank" 
@@ -843,12 +855,12 @@ function ProjectModal({ project, onClose, isDarkMode }) {
                             <Icon name="external-link" size={14} />
                         </a>
                     </div>
-
+ 
                     <div className="space-y-3">
                         <h5 className="font-cinzel text-base sm:text-lg font-bold text-amber-400">System Overview</h5>
                         <p className="text-xs sm:text-sm leading-relaxed text-zinc-300 light:text-zinc-700">{project.details.overview}</p>
                     </div>
-
+ 
                     <div className="space-y-4">
                         <h5 className="font-cinzel text-base sm:text-lg font-bold text-amber-400">Architecture & Technical Capabilities</h5>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -862,7 +874,7 @@ function ProjectModal({ project, onClose, isDarkMode }) {
                             ))}
                         </div>
                     </div>
-
+ 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                         <div className={`p-5 rounded-xl border ${isDarkMode ? 'bg-red-500/5 border-red-500/20' : 'bg-red-50 border-red-200'}`}>
                             <h6 className="font-bold text-xs font-mono uppercase tracking-wider text-red-400 mb-2">Engineering Challenge</h6>
@@ -873,7 +885,7 @@ function ProjectModal({ project, onClose, isDarkMode }) {
                             <p className="text-xs leading-relaxed text-zinc-300 light:text-zinc-700">{project.details.solution}</p>
                         </div>
                     </div>
-
+ 
                     <div className="space-y-3">
                         <h5 className="font-cinzel text-base sm:text-lg font-bold text-amber-400">Technology Tags</h5>
                         <div className="flex flex-wrap gap-2">
@@ -885,13 +897,13 @@ function ProjectModal({ project, onClose, isDarkMode }) {
                         </div>
                     </div>
                 </div>
-
+ 
                 <div className="p-5 sm:p-6 border-t border-zinc-800 flex items-center justify-between">
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-zinc-400 hover:text-white flex items-center gap-1.5">
                         <Icon name="github" size={16} />
                         <span>Source Repository</span>
                     </a>
-
+ 
                     <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-xs font-mono uppercase tracking-wider bg-zinc-800 hover:bg-zinc-700 transition-colors">
                         Close
                     </button>
@@ -900,7 +912,7 @@ function ProjectModal({ project, onClose, isDarkMode }) {
         </div>
     );
 }
-
+ 
 // --- CERTIFICATIONS SECTION COMPONENT ---
 function CertificationsSection({ isDarkMode }) {
     return (
@@ -910,7 +922,7 @@ function CertificationsSection({ isDarkMode }) {
                 <h2 className="font-cinzel text-2xl sm:text-4xl font-bold">Authorized Global Certifications</h2>
                 <div className="w-16 h-1 bg-amber-500 mx-auto rounded-full"></div>
             </div>
-
+ 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {CERTS_DATA.map((cert, idx) => (
                     <div 
@@ -926,13 +938,13 @@ function CertificationsSection({ isDarkMode }) {
                                     Verified
                                 </span>
                             </div>
-
+ 
                             <div>
                                 <h3 className="font-cinzel font-bold text-sm sm:text-base leading-snug">{cert.title}</h3>
                                 <p className="text-xs font-mono text-amber-400 mt-1">{cert.issuer}</p>
                             </div>
                         </div>
-
+ 
                         <div className={`pt-4 border-t flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-zinc-500 ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`}>
                             <span>{cert.credential}</span>
                             <span>{cert.date}</span>
@@ -943,26 +955,26 @@ function CertificationsSection({ isDarkMode }) {
         </section>
     );
 }
-
+ 
 // --- CONTACT SECTION COMPONENT (100% PURE STATIC FRONTEND — no backend, no email exposure in UI) ---
 function ContactSection({ isDarkMode, showToast }) {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [submitted, setSubmitted] = useState(false);
-
+ 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+ 
         // Pure client-side dispatch — zero backend/server route involved.
         const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
         const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
         window.location.href = `mailto:omar.faqeeh12@gmail.com?subject=${subject}&body=${body}`;
-
+ 
         setFormData({ name: '', email: '', message: '' });
         setSubmitted(true);
         showToast("Success! Your message has been sent successfully.");
         setTimeout(() => setSubmitted(false), 5000);
     };
-
+ 
     return (
         <section id="contact" className={`py-16 sm:py-24 px-4 sm:px-6 border-t ${isDarkMode ? 'bg-zinc-950 border-zinc-900' : 'bg-zinc-100 border-zinc-200'}`}>
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12">
@@ -975,7 +987,7 @@ function ContactSection({ isDarkMode, showToast }) {
                             Available for high-impact full-stack web engineering, embedded IoT systems architecture, and AI workflow automation consulting.
                         </p>
                     </div>
-
+ 
                     <div className="space-y-3 sm:space-y-4">
                         <a href="mailto:omar.faqeeh12@gmail.com" className={`p-4 rounded-xl flex items-center gap-4 border transition-all ${isDarkMode ? 'bg-zinc-900 border-zinc-800 hover:border-amber-500/50' : 'bg-white border-zinc-200 shadow-sm'}`}>
                             <div className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
@@ -986,7 +998,7 @@ function ContactSection({ isDarkMode, showToast }) {
                                 <div className="text-xs sm:text-sm font-bold truncate">omar.faqeeh12@gmail.com</div>
                             </div>
                         </a>
-
+ 
                         <a href="tel:+966582553328" className={`p-4 rounded-xl flex items-center gap-4 border transition-all ${isDarkMode ? 'bg-zinc-900 border-zinc-800 hover:border-amber-500/50' : 'bg-white border-zinc-200 shadow-sm'}`}>
                             <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
                                 <Icon name="phone" size={20} />
@@ -996,7 +1008,7 @@ function ContactSection({ isDarkMode, showToast }) {
                                 <div className="text-xs sm:text-sm font-bold">+966 58 255 3328</div>
                             </div>
                         </a>
-
+ 
                         <a href="https://github.com/omarfaqeeh" target="_blank" rel="noopener noreferrer" className={`p-4 rounded-xl flex items-center gap-4 border transition-all ${isDarkMode ? 'bg-zinc-900 border-zinc-800 hover:border-amber-500/50' : 'bg-white border-zinc-200 shadow-sm'}`}>
                             <div className="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0">
                                 <Icon name="github" size={20} />
@@ -1008,7 +1020,7 @@ function ContactSection({ isDarkMode, showToast }) {
                         </a>
                     </div>
                 </div>
-
+ 
                 <div className={`lg:col-span-7 p-6 sm:p-8 rounded-2xl ${isDarkMode ? 'luxury-card-dark' : 'luxury-card-light'}`}>
                     <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
                         <div className="space-y-1">
@@ -1040,7 +1052,7 @@ function ContactSection({ isDarkMode, showToast }) {
                                 />
                             </div>
                         </div>
-
+ 
                         <div className="space-y-2">
                             <label className="text-[11px] font-mono uppercase text-zinc-400">Message Details</label>
                             <textarea 
@@ -1052,7 +1064,7 @@ function ContactSection({ isDarkMode, showToast }) {
                                 className={`w-full px-4 py-3 rounded-xl border text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition-colors ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-zinc-50 border-zinc-300 text-black'}`}
                             ></textarea>
                         </div>
-
+ 
                         <button 
                             type="submit"
                             className={`w-full py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-xl flex items-center justify-center gap-2 ${isDarkMode ? 'bg-zinc-100 text-black hover:bg-zinc-300' : 'bg-black text-white hover:bg-zinc-800'}`}
@@ -1060,7 +1072,7 @@ function ContactSection({ isDarkMode, showToast }) {
                             <Icon name="send" size={14} />
                             <span>Send Message</span>
                         </button>
-
+ 
                         {/* Clean success confirmation — no delivery mechanism or address exposed */}
                         {submitted && (
                             <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-emerald-400 pt-1">
@@ -1070,12 +1082,12 @@ function ContactSection({ isDarkMode, showToast }) {
                         )}
                     </form>
                 </div>
-
+ 
             </div>
         </section>
     );
 }
-
+ 
 // --- FOOTER COMPONENT ---
 function Footer({ isDarkMode }) {
     return (
@@ -1089,7 +1101,7 @@ function Footer({ isDarkMode }) {
         </footer>
     );
 }
-
+ 
 // --- FLOATING DEDICATED AI CHATBOT OVERLAY ---
 function AIChatbotOverlay({ isDarkMode }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -1098,23 +1110,23 @@ function AIChatbotOverlay({ isDarkMode }) {
     ]);
     const [input, setInput] = useState('');
     const messagesEndRef = useRef(null);
-
+ 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
-
+ 
     useEffect(() => {
         if (isOpen) scrollToBottom();
     }, [messages, isOpen]);
-
+ 
     const handleSend = (userText) => {
         const textToSend = userText || input;
         if (!textToSend.trim()) return;
-
+ 
         const newMsgs = [...messages, { sender: 'user', text: textToSend }];
         setMessages(newMsgs);
         if (!userText) setInput('');
-
+ 
         setTimeout(() => {
             const query = textToSend.toLowerCase();
             let botReply = "Omar is a Full-Stack Web Developer & IoT Engineer skilled in C#, MERN stack (Next.js, React, Node, MongoDB), Python, Arduino Mega, Raspberry Pi 5, and n8n automations. You can view Mobtaker at https://mobtaker.vercel.app/ and Rabie Al-Qalb at https://ayah-woad.vercel.app/ !";
@@ -1125,11 +1137,11 @@ function AIChatbotOverlay({ isDarkMode }) {
                     break;
                 }
             }
-
+ 
             setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
         }, 300);
     };
-
+ 
     return (
         <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">
             {isOpen && (
@@ -1151,7 +1163,7 @@ function AIChatbotOverlay({ isDarkMode }) {
                             <Icon name="x" size={18} />
                         </button>
                     </div>
-
+ 
                     <div className="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
                         {messages.map((m, idx) => (
                             <div key={idx} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -1162,7 +1174,7 @@ function AIChatbotOverlay({ isDarkMode }) {
                         ))}
                         <div ref={messagesEndRef} />
                     </div>
-
+ 
                     <div className="px-3 py-2 border-t border-zinc-800/60 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono">
                         <button onClick={() => handleSend("What is Omar's stack?")} className="px-2.5 py-1 rounded-full bg-zinc-800 text-amber-300 hover:bg-zinc-700 whitespace-nowrap">
                             Stack Overview
@@ -1174,7 +1186,7 @@ function AIChatbotOverlay({ isDarkMode }) {
                             n8n Automations
                         </button>
                     </div>
-
+ 
                     <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="p-3 border-t border-zinc-800 flex items-center gap-2">
                         <input 
                             type="text" 
@@ -1189,7 +1201,7 @@ function AIChatbotOverlay({ isDarkMode }) {
                     </form>
                 </div>
             )}
-
+ 
             <button 
                 onClick={() => setIsOpen(!isOpen)}
                 className={`flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-2xl transition-all duration-300 hover:scale-105 ${isDarkMode ? 'bg-zinc-100 text-black border border-white hover:shadow-white/20' : 'bg-black text-white border border-black'}`}
@@ -1203,7 +1215,8 @@ function AIChatbotOverlay({ isDarkMode }) {
         </div>
     );
 }
-
+ 
 // Render React App
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
+ 
