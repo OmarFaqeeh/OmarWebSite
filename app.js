@@ -440,8 +440,15 @@ function Hero({ isDarkMode, triggerConfetti }) {
  
     useEffect(() => {
         let typeTimer = null;
+        let loopTimer = null;
+ 
+        const clearAllTimers = () => {
+            clearInterval(typeTimer);
+            clearInterval(loopTimer);
+        };
  
         const runTypingCycle = () => {
+            clearInterval(typeTimer);
             setTypedText('');
             let i = 0;
             typeTimer = setInterval(() => {
@@ -454,12 +461,33 @@ function Hero({ isDarkMode, triggerConfetti }) {
             }, 60);
         };
  
-        runTypingCycle(); // Runs immediately on page load
-        const loopTimer = setInterval(runTypingCycle, 20000); // Repeats every 20 seconds
+        const startLoop = () => {
+            clearAllTimers();
+            runTypingCycle(); // Runs immediately on page load / resume
+            loopTimer = setInterval(runTypingCycle, 20000); // Repeats every 20 seconds
+        };
+ 
+        // Browsers throttle/freeze setInterval on hidden tabs and bfcache restores,
+        // which left the animation stuck mid-cycle. Restart cleanly whenever the
+        // page becomes visible again instead of relying on the frozen timers.
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                startLoop();
+            }
+        };
+        const handlePageShow = (e) => {
+            // e.persisted === true means restored from bfcache (back/forward navigation)
+            startLoop();
+        };
+ 
+        startLoop();
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('pageshow', handlePageShow);
  
         return () => {
-            clearInterval(typeTimer);
-            clearInterval(loopTimer);
+            clearAllTimers();
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('pageshow', handlePageShow);
         };
     }, []);
  
@@ -1219,4 +1247,5 @@ function AIChatbotOverlay({ isDarkMode }) {
 // Render React App
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
+ 
  
